@@ -4,13 +4,13 @@ help:
 
 .PHONY: up
 up: ## Start docker environment
-	docker-compose up -d
-	docker logs -f ppostgres
+	docker compose up -d
+	docker compose logs -f
 
 .PHONY: clean
 clean: ## Clean up docker container
-	docker-compose down -t0
+	docker compose down -t0
 
 .PHONY: full_clean
 full_clean: ## Clean up docker container with volume
-	docker-compose down -vt0
+	docker compose down -vt0

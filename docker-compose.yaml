@@ -1,18 +1,26 @@
-version: '3.9'
+version: "3.9"
 
 services:
-  ppostgres:
-    container_name: ppostgres
-    image: "postgres:14-alpine"
+  postgres:
+    container_name: ppostgres.postgres
+    image: "postgres:15-alpine"
     restart: unless-stopped
+    expose:
+      - "5432"
     ports:
-      - "127.0.0.1:5432:5432"
+      - "127.0.0.1:${PORTS:-5432}:5432"
     environment:
-      POSTGRES_PASSWORD: $PPOSTGRES_PASSWORD
-      POSTGRES_USER: ${PPOSTGRES_USER:-$USER}
-      POSTGRES_DB: ${PPOSTGRES_USER:-$USER}
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+      POSTGRES_USER: ${POSTGRES_USER:-$USER}
+      POSTGRES_DB: ${POSTGRES_DB:-${POSTGRES_USER:-$USER}}
     volumes:
-      - "ppostgres-data:/var/lib/postgresql/data:rw"
+      - "ppostgres.postgres.data:/var/lib/postgresql/data:rw"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 60s
+      retries: 5
+      start_period: 10s
 
 volumes:
-  ppostgres-data:
+  ppostgres.postgres.data: {}

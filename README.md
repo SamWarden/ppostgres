@@ -8,7 +8,7 @@ To launch Postgres server just run
 make up
 ```
 
-The server will listen port `5432`. You should specify the `PPOSTGRES_PASSWORD` environment variable to secure the server. To configure your `psql` client to use the password to connect to the server, copy `.pgpass` to the `$HOME` directory and change `password` and `username` there
+The server will listen port `5432`. You should specify the `POSTGRES_PASSWORD` environment variable to secure the server. To configure your `psql` client to use the password to connect to the server, copy `.pgpass` to the `$HOME` directory and change `password` and `username` there
 
 ```bash
 cp .pgpass ~/
